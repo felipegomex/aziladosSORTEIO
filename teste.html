@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <title>Sorteio de Times</title>
+</head>
+<body>
+  <h1>Sorteio de Times</h1>
+
+  <h2>Jogadores Cadastrados:</h2>
+  <ul id="jogadores"></ul>
+
+  <h2>Times Sorteados:</h2>
+  <ul id="times"></ul>
+
+  <h2>Adicionar Jogador:</h2>
+  <input type="text" id="nome" placeholder="Nome do jogador">
+  <select id="posicao">
+    <option value="GOLEIRO">Goleiro</option>
+    <option value="LATERAL_DIREITO">Lateral Direito</option>
+    <option value="ZAGUEIRO">Zagueiro</option>
+    <option value="LATERAL_ESQUERDO">Lateral Esquerdo</option>
+    <option value="VOLANTE">Volante</option>
+    <option value="MEIA">Meia</option>
+    <option value="ATACANTE">Atacante</option>
+  </select>
+  <button onclick="adicionarJogador()">Adicionar</button>
+
+  <button onclick="sortearTimes()">Sortear Times</button>
+
+  <script>
+    // Array para armazenar os jogadores
+    var jogadores = [
+  { nome: "Jogador1", posicao: "GOLEIRO" },
+  { nome: "Jogador2", posicao: "GOLEIRO" },
+  { nome: "Jogador3", posicao: "GOLEIRO" },
+  { nome: "Jogador4", posicao: "LATERAL_DIREITO" },
+  { nome: "Jogador5", posicao: "LATERAL_DIREITO" },
+  { nome: "Jogador6", posicao: "LATERAL_DIREITO" },
+  { nome: "Jogador7", posicao: "ZAGUEIRO" },
+  { nome: "Jogador8", posicao: "ZAGUEIRO" },
+  { nome: "Jogador9", posicao: "ZAGUEIRO" },
+  { nome: "Jogador10", posicao: "ZAGUEIRO" },
+  { nome: "Jogador11", posicao: "ZAGUEIRO" },
+  { nome: "Jogador12", posicao: "ZAGUEIRO" },
+  { nome: "Jogador13", posicao: "LATERAL_ESQUERDO" },
+  { nome: "Jogador14", posicao: "LATERAL_ESQUERDO" },
+  { nome: "Jogador15", posicao: "LATERAL_ESQUERDO" },
+  { nome: "Jogador16", posicao: "VOLANTE" },
+  { nome: "Jogador17", posicao: "VOLANTE" },
+  { nome: "Jogador18", posicao: "VOLANTE" },
+  { nome: "Jogador19", posicao: "MEIA" },
+  { nome: "Jogador20", posicao: "MEIA" },
+  { nome: "Jogador21", posicao: "MEIA" },
+  { nome: "Jogador22", posicao: "MEIA" },
+  { nome: "Jogador23", posicao: "MEIA" },
+  { nome: "Jogador24", posicao: "MEIA" },
+  { nome: "Jogador25", posicao: "ATACANTE" },
+  { nome: "Jogador26", posicao: "ATACANTE" },
+  { nome: "Jogador27", posicao: "ATACANTE" },
+  { nome: "Jogador28", posicao: "ATACANTE" },
+  { nome: "Jogador29", posicao: "ATACANTE" },
+  { nome: "Jogador30", posicao: "ATACANTE" },
+  { nome: "Jogador31", posicao: "ATACANTE" },
+  { nome: "Jogador32", posicao: "ATACANTE" },
+  { nome: "Jogador33", posicao: "ATACANTE" }
+];
+
+
+    // Função para adicionar um jogador à lista
+    function adicionarJogador() {
+      var nome = document.getElementById("nome").value;
+      var posicao = document.getElementById("posicao").value;
+      var jogador = {
+        nome: nome,
+        posicao: posicao
+      };
+      jogadores.push(jogador);
+      exibirJogadores();
+      limparCampos();
+    }
+
+    // Função para exibir os jogadores cadastrados
+    function exibirJogadores() {
+      var listaJogadores = document.getElementById("jogadores");
+      listaJogadores.innerHTML = "";
+      for (var i = 0; i < jogadores.length; i++) {
+        var jogador = jogadores[i];
+        var itemLista = document.createElement("li");
+        itemLista.textContent = jogador.nome + " - " + jogador.posicao;
+        listaJogadores.appendChild(itemLista);
+      }
+    }
+
+    // Função para limpar os campos de entrada
+    function limparCampos() {
+      document.getElementById("nome").value = "";
+      document.getElementById("posicao").selectedIndex = 0;
+    }
+
+    // Função para sortear os times
+    function sortearTimes() {
+      // Filtrar jogadores por posição
+      var goleiros = filtrarJogadoresPorPosicao("GOLEIRO");
+      var lateraisDireitos = filtrarJogadoresPorPosicao("LATERAL_DIREITO");
+      var zagueiros = filtrarJogadoresPorPosicao("ZAGUEIRO");
+      var lateraisEsquerdos = filtrarJogadoresPorPosicao("LATERAL_ESQUERDO");
+      var volantes = filtrarJogadoresPorPosicao("VOLANTE");
+      var meias = filtrarJogadoresPorPosicao("MEIA");
+      var atacantes = filtrarJogadoresPorPosicao("ATACANTE");
+
+      // Sortear jogadores para cada time
+      var times = [];
+      for (var i = 1; i <= 3; i++) {
+        var time = {
+          goleiro: sortearJogador(goleiros),
+          zagueiros: sortearJogadores(zagueiros, 2),
+          lateralDireito: sortearJogador(lateraisDireitos),
+          lateralEsquerdo: sortearJogador(lateraisEsquerdos),
+          volante: sortearJogador(volantes),
+          meias: sortearJogadores(meias, 2),
+          atacantes: sortearJogadores(atacantes, 3)
+        };
+        times.push(time);
+      }
+
+      // Exibir os times sorteados
+      var listaTimes = document.getElementById("times");
+      listaTimes.innerHTML = "";
+      for (var i = 0; i < times.length; i++) {
+        var time = times[i];
+        var itemLista = document.createElement("li");
+        itemLista.textContent = "Time " + (i + 1);
+        itemLista.innerHTML += "<ul>";
+        itemLista.innerHTML += "<li>Goleiro: " + time.goleiro.nome + "</li>";
+        itemLista.innerHTML += "<li>Zagueiros: " + formatarJogadores(time.zagueiros) + "</li>";
+        itemLista.innerHTML += "<li>Lateral Direito: " + time.lateralDireito.nome + "</li>";
+        itemLista.innerHTML += "<li>Lateral Esquerdo: " + time.lateralEsquerdo.nome + "</li>";
+        itemLista.innerHTML += "<li>Volante: " + time.volante.nome + "</li>";
+        itemLista.innerHTML += "<li>Meias: " + formatarJogadores(time.meias) + "</li>";
+        itemLista.innerHTML += "<li>Atacantes: " + formatarJogadores(time.atacantes) + "</li>";
+        itemLista.innerHTML += "</ul>";
+        listaTimes.appendChild(itemLista);
+      }
+    }
+
+    // Função auxiliar para filtrar jogadores por posição
+    function filtrarJogadoresPorPosicao(posicao) {
+      return jogadores.filter(function(jogador) {
+        return jogador.posicao === posicao;
+      });
+    }
+
+    // Função auxiliar para sortear um jogador
+    function sortearJogador(jogadores) {
+      var indiceSorteado = Math.floor(Math.random() * jogadores.length);
+      return jogadores.splice(indiceSorteado, 1)[0];
+    }
+
+    // Função auxiliar para sortear vários jogadores
+    function sortearJogadores(jogadores, quantidade) {
+      var jogadoresSorteados = [];
+      for (var i = 0; i < quantidade; i++) {
+        var jogadorSorteado = sortearJogador(jogadores);
+        jogadoresSorteados.push(jogadorSorteado);
+      }
+      return jogadoresSorteados;
+    }
+
+    // Função auxiliar para formatar jogadores em uma string separada por vírgula
+    function formatarJogadores(jogadores) {
+      var nomes = jogadores.map(function(jogador) {
+        return jogador.nome;
+      });
+      return nomes.join(", ");
+    }
+  </script>
+</body>
+</html>

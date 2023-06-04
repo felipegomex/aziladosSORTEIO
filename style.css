@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  h2 {
+    color: #666;
+    margin-top: 30px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  select {
+    padding: 5px;
+    font-size: 16px;
+  }
+  
+  button {
+    padding: 8px 15px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #555;
+  }
+  
+  #nome,
+  #posicao {
+    margin-right: 10px;
+  }
+  
+  #times {
+    margin-top: 20px;
+  }
+  
+  #times li {
+    margin-top: 10px;
+  }
+  
+  #times ul {
+    margin-top: 5px;
+    margin-left: 20px;
+  }
+  
+  #times li:first-child {
+    font-weight: bold;
+  }
+  
